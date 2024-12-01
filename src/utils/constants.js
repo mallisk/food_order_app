@@ -2,7 +2,7 @@ export const IMG_CDN_URL =
   "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=restaurant-food&sf=&txt_keyword=All";
   // "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=restaurant-food&sf=&txt_keyword=All"
   
-export const restaurantList = [
+const  restaurantList = [
     {
       type: "restaurant",
       data: {
@@ -733,3 +733,5 @@ export const restaurantList = [
       subtype: "basic",
     },
   ];
+
+export default restaurantList;

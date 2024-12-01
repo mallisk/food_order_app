@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM  from "react-dom/client";
 import "../index.css"
-import { restaurantList,IMG_CDN_URL } from "./utils/constants";
+import restaurantList, {IMG_CDN_URL } from "./utils/constants";
 import Header from "./components/Header";
 import Body from "./components/Body";
  
