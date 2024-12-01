@@ -38,7 +38,7 @@ const AppLayout = () =>{
         Body 
          footer */}
          <Header /> 
-         <Body restaurantList ={restaurantList}/>
+         <Body/>
     </div>
   )
 }
