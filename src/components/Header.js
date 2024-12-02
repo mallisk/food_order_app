@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { IMG_CDN_URL } from "../utils/constants";
 const Header = () =>{
+    const [btnName, setBtnName] = useState("Login")
     return(
      <div className="header">
        <div className="logo-container">
@@ -12,6 +14,9 @@ const Header = () =>{
              <li>About us</li>
              <li>contact us</li>
              <li>cart</li>
+              <li> 
+             <button className="login" onClick={()=>{ btnName == "Login" ?  setBtnName("Logout") : setBtnName("Login") }}> {btnName}</button>
+             </li> 
            </ul>
        </div>
      </div>
