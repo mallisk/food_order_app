@@ -4,7 +4,11 @@ import "../index.css"
 import restaurantList, {IMG_CDN_URL } from "./utils/constants";
 import Header from "./components/Header";
 import Body from "./components/Body";
- 
+import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom"
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+import ResraurantMenu from "./components/ResraurantMenu";
 
 //  Header
 //    Logo
@@ -27,22 +31,49 @@ const styleCard = {
 
 
 
-
-
-
 const AppLayout = () =>{
   return (
     <div className="App">
-        {/*  
-         Header
-        Body 
-         footer */}
          <Header /> 
-         <Body/>
+        <Outlet />
     </div>
   )
 }
+const appRouter = createBrowserRouter([
+  {
+  path:"/",
+  element:<AppLayout />,
+  children:[
+    {
+      path:"/",
+      element:<Body />
+    },
+    {
+      path:"/about",
+      element:<About />
+    },
+    {
+      path:"/contact",
+      element:<Contact />
+    },
+    {
+      path:"/restaurants/:resId",  // dynamic id is coming here
+      element:<ResraurantMenu/>
+    }
+  ],
+  errorElement:<Error />
+},
 
+// {
+//   path:"/*",
+//   element:< 
+// }
+// {
+//   path:"/contact",
+//   element:<Contact />
+
+// }
+]);
 const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(<AppLayout />)
+root.render(<RouterProvider router={appRouter}></RouterProvider> )
 
