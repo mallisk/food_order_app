@@ -46,11 +46,11 @@ const appRouter = createBrowserRouter([
   children:[
     {
       path:"/",
-      element:<Body />
+      element:<Body />,
     },
     {
       path:"/about",
-      element:<About />
+      element:<About />,
     },
     {
       path:"/contact",
@@ -58,7 +58,7 @@ const appRouter = createBrowserRouter([
     },
     {
       path:"/restaurants/:resId",  // dynamic id is coming here
-      element:<ResraurantMenu/>
+      element:<ResraurantMenu/>,
     }
   ],
   errorElement:<Error />
