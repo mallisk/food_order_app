@@ -18,3 +18,5 @@ const useOnlineStatus = () => {
 
   return isOnline;
 };
+
+export { useOnlineStatus };
