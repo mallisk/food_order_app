@@ -1,4 +1,4 @@
-import React from "react";
+import React, {lazy, Suspense} from "react";
 import ReactDOM  from "react-dom/client";
 import "../index.css"
 import restaurantList, {IMG_CDN_URL } from "./utils/constants";
@@ -30,7 +30,7 @@ const styleCard = {
 }
 
 
-
+const Grocery = lazy(()=>import("./components/Grocery"))
 const AppLayout = () =>{
   return (
     <div className="App">
@@ -59,6 +59,12 @@ const appRouter = createBrowserRouter([
     {
       path:"/restaurants/:resId",  // dynamic id is coming here
       element:<ResraurantMenu/>,
+    },
+     {
+      path:"/grocery",  // dynamic id is coming here
+      element:<Suspense fallback="Loading...">
+        <Grocery/>
+      </Suspense>,
     }
   ],
   errorElement:<Error />
