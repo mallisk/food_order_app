@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import restaurantList from "../utils/constants";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 const Body = () => {
   //   const { restaurantList } = props;
   const [res, setRes] = useState([]);
@@ -9,22 +10,39 @@ const Body = () => {
   const [showAll, setShowAll] = useState(false);
   const [searchText, setSearchText] = useState("");
 
+  // execute only once
   useEffect(() => {
+    console.log("only one");
     fetchData();
     setRes(restaurantList);
     setFilterRes(restaurantList);
   }, []);
+  
+  // logic to search the resturentlist for each change on search field
+  useEffect(() => {
+    console.log("only if dependency");
+    const dt = restaurantList.filter((res) => {
+      return res.data.name.startsWith(searchText);
+    });
+    if (dt.length != 0) {
+      setFilterRes(dt);
+    } else {
+      setRes(restaurantList);
+    }
+  }, [searchText]);
+
+  // calls every time
+  useEffect(() => {
+    console.log("emppty dependency array");
+  });
 
   const fetchData = async () => {
-    console.log("before call");
-    const data = await fetch("https://testeffwe.free.beeceptor.com/");
-    const json = data.json();
-    console.log("data", json);
+    // const data = await fetch("https://testeffwe.free.beeceptor.com/");
+    //const json = data.json();
   };
-  console.log("Body rendered");
+ 
   const getTophandler = () => {
     let data = restaurantList.filter((res) => {
-      console.log("ressss", res.data.avgRating);
       return Number(res.data.avgRating) >= 4;
     });
     setShowAll(true);
@@ -41,25 +59,10 @@ const Body = () => {
         .toLocaleLowerCase()
         .includes(searchText.toLocaleLowerCase());
     });
-    console.log("eee", searchText, restlist);
     setFilterRes(restlist);
   };
-  // logic to search the resturentlist by charecter
-  useEffect(() => {
-    const dt = restaurantList.filter((res) => {
-      console.log("searchText 1", res.data.name);
-      console.log("searchText 2", searchText);
-      return res.data.name.startsWith(searchText);
-    });
-    if (dt.length != 0) {
-      setFilterRes(dt);
-    } else {
-      setRes(restaurantList);
-    }
-  }, [searchText]);
 
-  console.log("restaurantList", res);
-  console.log("searchText", searchText);
+  console.log("Body rendered");
   return res.length === 0 ? (
     <Shimmer />
   ) : (
@@ -79,21 +82,19 @@ const Body = () => {
         <button className="filter-btn" onClick={getTophandler}>
           Top Rated restaurant
         </button>
-          <button className="filter-btn" onClick={getClearHandler}>
-            Clear
-          </button>
-        
+        <button className="filter-btn" onClick={getClearHandler}>
+          Clear
+        </button>
       </div>
 
       <div className="res-container">
         {filterres?.map((res, index) => (
-          <div key={index}>
-            <RestaurantCard res={res.data} />
-          </div>
+            <Link key={res.data.id} to={"/restaurants/"+res.data.id}><RestaurantCard  res={res.data} /></Link>
         ))}
       </div>
     </div>
   );
+
 };
 
 export default Body;
