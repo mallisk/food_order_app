@@ -66,28 +66,30 @@ const Body = () => {
   return res.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            className="search-box"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-          />
-          <button onClick={() => searchHandler(searchText)}>search</button>
-        </div>
-        <button className="filter-btn" onClick={getTophandler}>
-          Top Rated restaurant
-        </button>
-        <button className="filter-btn" onClick={getClearHandler}>
-          Clear
-        </button>
+    <div className="body body-container">
+      <div className="search-container flex justify-content items-center m-4 p-4">
+          <div className="flex justify-content items-center m-4 p-4">
+            <input 
+              className="border border-solid border-black"
+              type="text"
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
+            />
+            <button className="search-btn bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => searchHandler(searchText)}>
+              search
+            </button>
+          </div>
+          <button className="filter-btn bg-green-500 text-white px-4 py-2 rounded-md" onClick={getTophandler}>
+            Top Rated restaurant
+          </button>
+          <button className="filter-btn bg-red-500 text-white px-4 py-2 rounded-md" onClick={getClearHandler}>
+            Clear
+          </button>
       </div>
 
-      <div className="res-container">
+      <div className="flex flex-wrap justify-center">
         {filterres?.map((res, index) => (
             <Link key={res.data.id} to={"/restaurants/"+res.data.id}><RestaurantCard  res={res.data} /></Link>
         ))}

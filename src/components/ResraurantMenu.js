@@ -30,15 +30,15 @@ const ResraurantMenu = () => {
   return resInfo === null ? (
     <Shimmer />
   ) : ( 
-    <div className="Menu">
+    <div className="menu-container m-4 p-4">
       <h1> {resInfo.name}</h1> 
       {/* <h3> {resInfo?.cuisines.join(", ")}</h3>  */}
       <h2>Menu</h2>
-      <ul>
-        <li>{MENU_DATA?.data?.name}</li>
-        <li>{resInfo?.data?.cuisines?.join(", ")}</li>
-        <li>{resInfo?.data?.costForTwoMsg}</li>
-        <li>{resInfo?.data?.totalRatingsString}</li>
+      <ul className="menu-list">
+        <li className="menu-item">{MENU_DATA?.data?.name}</li>
+        <li className="menu-item">{resInfo?.data?.cuisines?.join(", ")}</li>
+        <li className="menu-item">{resInfo?.data?.costForTwoMsg}</li>
+        <li className="menu-item">{resInfo?.data?.totalRatingsString}</li>
       </ul>
     </div>
   );

@@ -3,7 +3,7 @@ const RestaurantCard = (props) =>{
     const {res} = props
     console.log("restaurantList",res)
      return (
-       <div className="res-card" >     
+       <div className=" m-4 p-4 w-[250px] h-[250px] border border-gray-300 rounded-lg bg-gray-100 hover:bg-gray-200" >     
          <div>
                  <img className="res-logo" alt="res-img"/>
                     <h4>{res.name}</h4>
