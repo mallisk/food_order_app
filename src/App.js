@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react";
+import React, {lazy, Suspense,useContext, useState} from "react";
 import ReactDOM  from "react-dom/client";
 import "../index.css"
 import restaurantList, {IMG_CDN_URL } from "./utils/constants";
@@ -9,6 +9,11 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import ResraurantMenu from "./components/ResraurantMenu";
+import Cart from "./components/cart";
+import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+
 
 
 //  Header
@@ -33,11 +38,16 @@ const styleCard = {
 
 const Grocery = lazy(()=>import("./components/Grocery"))
 const AppLayout = () =>{
+  const [userName, setUserName] = useState("Malli");
+
+  console.log("user", userName);
   return (
-    <div className="App">
-         <Header /> 
-        <Outlet />
-    </div>
+    <UserContext.Provider value={{ userName, setUserName }}>
+      <div className="App">
+          <Header /> 
+          <Outlet />
+      </div>
+    </UserContext.Provider>
   )
 }
 const appRouter = createBrowserRouter([
@@ -61,6 +71,10 @@ const appRouter = createBrowserRouter([
       path:"/restaurants/:resId",  // dynamic id is coming here
       element:<ResraurantMenu/>,
     },
+    {
+      path:"/cart",  // dynamic id is coming here
+      element:<Cart/>,
+    },
      {
       path:"/grocery",  // dynamic id is coming here
       element:<Suspense fallback="Loading...">
@@ -81,6 +95,10 @@ const appRouter = createBrowserRouter([
 
 // }
 ]);
-const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(<RouterProvider router={appRouter}></RouterProvider> )
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Provider store={appStore}>
+    <RouterProvider router={appRouter} />
+  </Provider>
+);
 

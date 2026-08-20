@@ -1,45 +1,41 @@
 import { useEffect, useState } from "react";
-import { FETCH_MENU_URL } from "../../../namaste-react-live/src/contants";
 import { MENU_DATA } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
+import RestaurantCategory from "./RestaurantCategory";
 const ResraurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
-  const {resId} = useParams();
-  console.log("para",resId)
-  const fetchMenu = async () => {
-    try {
-      let data = await fetch(
-        "https://corsproxy.io/?https://www.swiggy.com/dapi/menu/v4/full?lat=12.9351929&lng=77.62448069999999&menuId="
-      );
-      let re = await data.json();
-      console.log("api response----",re);
-    } catch {
-      console.log("-----", MENU_DATA);
-      setResInfo(MENU_DATA);
-    }
-  };
-
+  const [showIndex,setShowIndex] = useState(1)
 
   useEffect(() => {
-    fetchMenu();
+    setResInfo(MENU_DATA);
   }, []);
 
-  
+  const restaurant = resInfo?.data;
+  const restoCategaries = restaurant?.menu?.widgets || [];
+
+// console.log("details-----",restoCategaries);
 //  const {name,cuisines,costForTwoMsg,totalRatingsString} = resInfo?.data;
   return resInfo === null ? (
     <Shimmer />
   ) : ( 
-    <div className="menu-container m-4 p-4">
-      <h1> {resInfo.name}</h1> 
-      {/* <h3> {resInfo?.cuisines.join(", ")}</h3>  */}
-      <h2>Menu</h2>
-      <ul className="menu-list">
-        <li className="menu-item">{MENU_DATA?.data?.name}</li>
-        <li className="menu-item">{resInfo?.data?.cuisines?.join(", ")}</li>
-        <li className="menu-item">{resInfo?.data?.costForTwoMsg}</li>
-        <li className="menu-item">{resInfo?.data?.totalRatingsString}</li>
-      </ul>
+    <div className="container text-center">
+      <h1 className="font-bold text-2xl">{restaurant.name}</h1>
+      <p className="mt-1 text-sm text-gray-600">{restaurant.cuisines.join(" • ")} • {restaurant.costForTwoMsg}</p>
+      <p className="mb-4 text-sm font-semibold">★ {restaurant.avgRatingString} ({restaurant.totalRatingsString}) • {restaurant.sla.slaString}</p>
+
+      {restoCategaries.map((catagory,index)=>{
+        return(
+          <RestaurantCategory 
+          key={catagory.name}
+          data={catagory}
+          itemsById={restaurant.menu.items}
+          showItems= { showIndex === index ? true: false}
+          index ={index}
+          setShowIndex = {setShowIndex}
+          />
+        )
+      })}
     </div>
   );
 };

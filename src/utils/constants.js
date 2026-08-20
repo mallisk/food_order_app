@@ -1,5 +1,10 @@
 export const IMG_CDN_URL =
   "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=restaurant-food&sf=&txt_keyword=All";
+
+export const getFoodImageUrl = (imageId, width = 508) =>
+  imageId
+    ? `https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_${width},h_320,c_fill/${imageId}`
+    : "";
   // "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=restaurant-food&sf=&txt_keyword=All"
   
 // const  restaurantList = [
@@ -63,6 +68,30 @@ export const IMG_CDN_URL =
 //   ];
  
 export const restaurantList = [
+    {
+      type: "restaurant",
+      data: {
+        type: "F",
+        id: "229",
+        name: "Meghana Foods",
+        city: "Bengaluru",
+        area: "Koramangala",
+        locality: "5th Block",
+        totalRatingsString: "5K+ ratings",
+        cloudinaryImageId: "xqwpuhgnsaf18te7zvtv",
+        cuisines: ["Biryani", "Andhra", "South Indian"],
+        costForTwo: 50000,
+        costForTwoString: "₹500 for two",
+        deliveryTime: 37,
+        minDeliveryTime: 35,
+        maxDeliveryTime: 40,
+        slaString: "35–40 mins",
+        avgRating: "4.4",
+        promoted: true,
+        availability: { opened: true },
+      },
+      subtype: "basic",
+    },
     {
       type: "restaurant",
       data: {

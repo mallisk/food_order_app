@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import { useEffect, useState,useContext } from "react";
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 import restaurantList from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
 const Body = () => {
   //   const { restaurantList } = props;
   const [res, setRes] = useState([]);
   const [filterres, setFilterRes] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [searchText, setSearchText] = useState("");
-
+  const { userName, setUserName } = useContext(UserContext);
+  const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
   // execute only once
   useEffect(() => {
     console.log("only one");
@@ -87,12 +89,20 @@ const Body = () => {
           <button className="filter-btn bg-red-500 text-white px-4 py-2 rounded-md" onClick={getClearHandler}>
             Clear
           </button>
+          <input 
+          value={userName}
+          onChange={(e)=>setUserName(e.target.value)}
+          />
       </div>
 
       <div className="flex flex-wrap justify-center">
         {filterres?.map((res, index) => (
+            res.data.promoted ? (
+            <Link key={res.data.id} to={"/restaurants/"+res.data.id}><PromotedRestaurantCard  res={res.data} /></Link>  
+            ):
+            (
             <Link key={res.data.id} to={"/restaurants/"+res.data.id}><RestaurantCard  res={res.data} /></Link>
-        ))}
+        )  ))}
       </div>
     </div>
   );
